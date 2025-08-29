@@ -18,6 +18,7 @@ export default function handler(req, res) {
         let sum_numbers = 0;
         let letters_for_concat = "";
 
+        // Helper function for alternating caps
         function alternatingCaps(str) {
             let result = "";
             let upper = true;
@@ -29,12 +30,12 @@ export default function handler(req, res) {
         }
 
         data.forEach(item => {
-            const strItem = String(item);
+            const strItem = String(item); // Always convert to string
             if (/^\d+$/.test(strItem)) {
                 const num = parseInt(strItem);
                 sum_numbers += num;
-                if (num % 2 === 0) even_numbers.push(strItem);
-                else odd_numbers.push(strItem);
+                if (num % 2 === 0) even_numbers.push(strItem); // Push as string
+                else odd_numbers.push(strItem);                // Push as string
             } else if (/^[a-zA-Z]+$/.test(strItem)) {
                 alphabets.push(strItem.toUpperCase());
                 letters_for_concat += strItem;
@@ -50,12 +51,12 @@ export default function handler(req, res) {
             user_id: `${FULL_NAME}_${DOB}`,
             email: EMAIL,
             roll_number: ROLL_NUMBER,
-            odd_numbers,
-            even_numbers,
-            alphabets,
-            special_characters,
-            sum: String(sum_numbers),
-            concat_string
+            odd_numbers: odd_numbers,
+            even_numbers: even_numbers,
+            alphabets: alphabets,
+            special_characters: special_characters,
+            sum: String(sum_numbers),      // Return sum as string
+            concat_string: concat_string
         });
 
     } catch (err) {
