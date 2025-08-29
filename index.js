@@ -10,10 +10,6 @@ const DOB = "17091999";
 const EMAIL = "john@xyz.com";
 const ROLL_NUMBER = "ABCD123";
 
-// Root route for friendly message
-app.get("/", (req, res) => {
-    res.send("BFHL API is live! Use POST /bfhl to send data.");
-});
 
 // Function to create alternating caps string
 function alternatingCaps(str) {
@@ -25,6 +21,13 @@ function alternatingCaps(str) {
     }
     return result;
 }
+
+
+// Root route for friendly message
+app.get("/", (req, res) => {
+    res.send("BFHL API is live! Use POST /bfhl to send data.");
+});
+
 
 app.post("/bfhl", (req, res) => {
     try {
