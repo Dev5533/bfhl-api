@@ -1,33 +1,15 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-
-const app = express();
-app.use(bodyParser.json());
-
-// User details (replace with your info)
-const FULL_NAME = "john_doe";
-const DOB = "17091999";
-const EMAIL = "john@xyz.com";
-const ROLL_NUMBER = "ABCD123";
-
-
-// Function to create alternating caps string
-function alternatingCaps(str) {
-    let result = "";
-    let upper = true;
-    for (let char of str) {
-        result += upper ? char.toUpperCase() : char.toLowerCase();
-        upper = !upper;
+export default function handler(req, res) {
+    if (req.method !== "POST") {
+        return res.status(405).json({ error: "Only POST requests allowed" });
     }
-    return result;
-}
 
-
-
-
-app.post("/bfhl", (req, res) => {
     try {
-        const data = req.body.data || [];
+        const { data } = req.body || [];
+
+        const FULL_NAME = "john_doe";
+        const DOB = "17091999";
+        const EMAIL = "john@xyz.com";
+        const ROLL_NUMBER = "ABCD123";
 
         let even_numbers = [];
         let odd_numbers = [];
@@ -35,6 +17,16 @@ app.post("/bfhl", (req, res) => {
         let special_characters = [];
         let sum_numbers = 0;
         let letters_for_concat = "";
+
+        function alternatingCaps(str) {
+            let result = "";
+            let upper = true;
+            for (let char of str) {
+                result += upper ? char.toUpperCase() : char.toLowerCase();
+                upper = !upper;
+            }
+            return result;
+        }
 
         data.forEach(item => {
             const strItem = String(item);
@@ -58,23 +50,15 @@ app.post("/bfhl", (req, res) => {
             user_id: `${FULL_NAME}_${DOB}`,
             email: EMAIL,
             roll_number: ROLL_NUMBER,
-            odd_numbers: odd_numbers,
-            even_numbers: even_numbers,
-            alphabets: alphabets,
-            special_characters: special_characters,
+            odd_numbers,
+            even_numbers,
+            alphabets,
+            special_characters,
             sum: String(sum_numbers),
-            concat_string: concat_string
+            concat_string
         });
 
     } catch (err) {
-        res.status(400).json({
-            is_success: false,
-            error: err.message
-        });
+        res.status(400).json({ is_success: false, error: err.message });
     }
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+}
