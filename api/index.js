@@ -23,10 +23,6 @@ function alternatingCaps(str) {
 }
 
 
-// Root route for friendly message
-app.get("/", (req, res) => {
-    res.send("BFHL API is live! Use POST /bfhl to send data.");
-});
 
 
 app.post("/bfhl", (req, res) => {
